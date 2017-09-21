@@ -52,7 +52,7 @@ def filter_linear_data(C, word_freq, word, c):
     if not os.path.exists(newpath):
         os.makedirs(newpath)
 
-    d = open('results/' + word + 'linear_' + word + '_comparison.dat', 'w')
+    d = open('results/' + word + '/linear_' + word + '_comparison.dat', 'w')
 
     for i in range(len(word_freq)):
         total_vector_arr = np.array([total_vector])
@@ -212,7 +212,7 @@ def main():
 
     # Calculate p_w
     # Sift through all c to find smallest cos angle
-    d = open('results/nonlinear_' + word + '_comparison.dat', 'w')
+    d = open('results/' + word + '/nonlinear_' + word + '_comparison.dat', 'w')
 
     results = []
     print('Finding cos angle between p_c and tau for all c...')
@@ -236,6 +236,7 @@ if __name__ == '__main__':
     # Load pre-trained model
     print('Loading pre-trained model...')
     logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-    model = gensim.models.KeyedVectors.load_word2vec_format('model/word2vec_model.bin.gz', binary=True)    main()
+    model = gensim.models.KeyedVectors.load_word2vec_format('model/word2vec_model.bin.gz', binary=True)
+    main()
     print("Program End.")
     print("--- %s seconds ---" % (time.time() - start_time))

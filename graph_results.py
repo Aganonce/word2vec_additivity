@@ -27,7 +27,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 
 # Load pre-trained model
 print('Loading pre-trained model...')
-model = gensim.models.KeyedVectors.load_word2vec_format('model/GoogleNews-vectors-negative300.bin.gz', binary=True)
+model = gensim.models.KeyedVectors.load_word2vec_format('model/word2vec_model.bin.gz', binary=True)
 
 words = get_dirs('results/*')
 
@@ -134,7 +134,6 @@ plt.ylabel('Rank')
 plt.title('Rank of Correct Word')
 plt.xticks(index + bar_width, words)
 plt.legend()
-plt.tight_layout()
 
 print('Nonlinear Mean: ', end='')
 print(np.mean(nonlinear_count))
