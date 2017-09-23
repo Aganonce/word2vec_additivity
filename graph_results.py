@@ -25,19 +25,12 @@ start_time = time.time()
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-# Load pre-trained model
-print('Loading pre-trained model...')
-model = gensim.models.KeyedVectors.load_word2vec_format('model/word2vec_model.bin.gz', binary=True)
-
 words = get_dirs('results/*')
 
 index = np.arange(len(words))
 
 linear_data = []
 nonlinear_data = []
-
-linear_ranked = []
-nonlinear_ranked = []
 
 linear_count = []
 nonlinear_count = []
@@ -69,16 +62,6 @@ for i in words:
 
     nonlinear_results.sort(key=lambda x: x[1])
     nonlinear_results.reverse()
-
-    if (i == nonlinear_results[0][0]):
-        nonlinear_ranked.append(1.00)
-    else:
-        nonlinear_ranked.append(model.wv.similarity(i, nonlinear_results[0][0]))
-
-    if (i == linear_results[0][0]):
-        linear_ranked.append(1.00)
-    else:
-        linear_ranked.append(model.wv.similarity(i, linear_results[0][0]))
 
     for j in range(len(nonlinear_results)):
         if (nonlinear_results[j][0] == i):

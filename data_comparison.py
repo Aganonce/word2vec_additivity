@@ -84,10 +84,6 @@ def main():
 if __name__ == '__main__':
     print("Program Begin.")
     start_time = time.time()
-    # Load pre-trained model
-    print('Loading pre-trained model...')
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-    model = gensim.models.KeyedVectors.load_word2vec_format('model/word2vec_model.bin.gz', binary=True)
     main()
     print("Program End.")
     print("--- %s seconds ---" % (time.time() - start_time))
