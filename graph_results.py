@@ -2,7 +2,6 @@ import matplotlib
 matplotlib.use('TkAgg')
 
 import sys
-import os
 import glob
 
 import gensim, logging
@@ -36,8 +35,13 @@ linear_count = []
 nonlinear_count = []
 for i in words:
     print('Scanning word ' + i)
-    with open('results/' + i + '/nonlinear_' + i + '_comparison.dat') as f:
-        nonlinear_content = f.readlines()
+    nonlinear_content = []
+    try:
+        with open('results/' + i + '/nonlinear_' + i + '_comparison.dat') as f:
+            nonlinear_content = f.readlines()
+    except:
+        print('Skipping ' + i + '...')
+        continue
 
     nonlinear_results = []
     for j in nonlinear_content:
@@ -71,15 +75,30 @@ for i in words:
         if (linear_results[j][0] == i):
             linear_count.append(j)
 
-newpath = 'plots/' 
-if not os.path.exists(newpath):
-    os.makedirs(newpath)
+final_comparison = []
+nonlinear_better = 0
+linear_better = 0
+for i in range(len(nonlinear_data)):
+    print(str(nonlinear_data[i]) + ' > ' + str(linear_data[i]) + ' and ' + str(nonlinear_count[i]) + ' < ' + str(linear_count[i]) + ' so for ' + str(words[i]) + ' better is ', end='')
+    if (nonlinear_data[i] > linear_data[i] and nonlinear_count[i] < linear_count[i]):
+        print('NONLINEAR')
+        final_comparison.append(words[i] + ' better with NONLINEAR')
+        nonlinear_better += 1
+    else:
+        print('LINEAR')
+        final_comparison.append(words[i] + ' better with LINEAR')
+        linear_better += 1
 
 bar_width = 0.30
 opacity = 0.8
 shift = 0.15
  
 fig = plt.figure(111)
+
+print(len(nonlinear_data))
+print(len(linear_data))
+print(len(nonlinear_count))
+print(len(linear_count))
 
 rects1 = plt.bar(index + shift, nonlinear_data, bar_width,
                  alpha=opacity,
@@ -108,26 +127,35 @@ rects2 = plt.bar(index + bar_width + shift, linear_count, bar_width,
                  color='g',
                  label='linear')
  
-
-plt.savefig(word + '_cos_similarity.png')
-plt.clf
-
 plt.xlabel('Definition Word')
 plt.ylabel('Rank')
 plt.title('Rank of Correct Word')
 plt.xticks(index + bar_width, words)
 plt.legend()
+plt.tight_layout()
 
-print('Nonlinear Mean: ', end='')
+print('-------------------------------------------')
+print('Nonlinear Mean for Correct Word Rank: ', end='')
 print(np.mean(nonlinear_count))
-print('Nonlinear Median: ', end='')
+print('Nonlinear Median for Correct Word Rank: ', end='')
 print(np.median(nonlinear_count))
-print('Linear Mean: ', end='')
+print('Nonlinear Mean for Correct Word Cosine Similarity: ', end='')
+print(np.mean(nonlinear_data))
+print('Nonlinear Median for Correct Word Cosine Similarity: ', end='')
+print(np.median(nonlinear_data))
+print('Linear Mean for Correct Word Rank: ', end='')
 print(np.mean(linear_count))
-print('Linear Median: ', end='')
+print('Linear Median for Correct Word Rank: ', end='')
 print(np.median(linear_count))
-
-plt.savefig(word + '_ranking.png')
-
+print('Linear Mean for Correct Word Cosine Similarity: ', end='')
+print(np.mean(linear_data))
+print('Linear Median for Correct Word Cosine Similarity: ', end='')
+print(np.median(linear_data))
+print('-------------------------------------------')
+print('Overall nonlinear superiority (better rank and cosine similarity): ' + str(nonlinear_better) + ' out of ' + str(len(nonlinear_count)) + '.')
+print('Overall linear superiority (better rank and cosine similarity): ' + str(linear_better) + ' out of ' + str(len(nonlinear_count)) + '.')
+print('-------------------------------------------')
 print('Program End.')
 print("--- %s seconds ---" % (time.time() - start_time))
+
+plt.show()
