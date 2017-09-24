@@ -117,7 +117,12 @@ def main():
     word_type = word_type[0]
     wordnet_definition = word + '.' + word_type + '.01'
     print(wordnet_definition)
-    sentence = wn.synset(wordnet_definition).definition()
+    sentence = ''
+    try:
+        sentence = wn.synset(wordnet_definition).definition()
+    except:
+        print('Could not find word ' + word + ' in WordNet vocabulary. Aborting...')
+        return 0
 
     if (';' in sentence):
         sent_list = sentence.split(';')
@@ -145,6 +150,10 @@ def main():
     
     # Generating linear comparisons for C
     c = filter_linear_data(C, word_freq, word, c)
+
+    if (len(c) > 600):
+        print('Set too large. Aborting...')
+        return 0
 
     # Generating nonlinear comparisons for C
     # Calculate p for all w
