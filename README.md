@@ -15,3 +15,7 @@ Both programs will output two files. The nonlinear comparison file will contain 
 Running `data_comparison.py word word_type` will pull the linear and nonlinear output files for the argument word and output a file that compares the top ten cosine similarities.
 
 Running `graph_results.py` will pull all files from results and save plots for the cosine similaritiy of the correct words and their actual rankings in the vocabulary, as well as output median and mean rankings for all results to the command line.
+
+## C++ Version
+
+To collect word embeddings generated from Google's original C Word2Vec (hierarchical softmax, no negative sampling) for the C++ version of the vanilla nonlinear composition code, navigate to the model folder and call `wget https://www.dropbox.com/s/j3iy88n206cpz6t/small_vectors.bin?dl=0`. The C++ code itself can be compiled as usual in the source folder.
