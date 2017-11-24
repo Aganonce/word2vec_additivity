@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
   f = fopen("model/small_vectors.bin", "rb"); // pull word embeddings
 
   if (f == NULL) {
-    printf("Input file not found\n");
+    std::cout << "Input file not found\n" << std::endl;
     return -1;
   }
 
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
   M = (float *)malloc((long long)words * (long long)size * sizeof(float)); // allocate embeddings
 
   if (M == NULL) { // catch for vector sets
-    printf("ERROR: Cannot allocate memory for vector values: %lld MB    %lld  %lld\n", (long long)words * size * sizeof(float) / 1048576, words, size);
+    std::cout << "ERROR: Cannot allocate memory for vector values." << std::endl;
     return -1;
   }
 
