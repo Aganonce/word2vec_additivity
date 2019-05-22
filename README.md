@@ -19,3 +19,7 @@ Running `graph_results.py` will pull all files from results and save plots for t
 ## C++ Version
 
 To collect word embeddings generated from Google's original C Word2Vec (hierarchical softmax, no negative sampling) for the C++ version of the vanilla nonlinear composition code, navigate to the model folder and call `wget https://www.dropbox.com/s/j3iy88n206cpz6t/small_vectors.bin?dl=0`. The C++ code itself can be compiled as usual in the source folder.
+
+## References
+
+[1] Gittens, Alex, Dimitris Achlioptas, and Michael W. Mahoney. "Skip-Gram− Zipf+ Uniform= Vector Additivity." Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). 2017.
